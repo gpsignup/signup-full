@@ -1,5 +1,8 @@
 from django.conf.urls import patterns, include, url
+from rest_framework.urlpatterns import format_suffix_patterns
+from signup import views
 
+'''
 urlpatterns = patterns('',
     url(r'^$', 'signup.views.index'),
     url(r'^create/$', 'signup.views.create'),
@@ -9,3 +12,18 @@ urlpatterns = patterns('',
     url(r'^signup/$', 'signup.views.signup'),
     url(r'^thanks/$', 'signup.views.thanks'),
 )
+'''
+
+# For testing Django REST Framework only: 
+urlpatterns = patterns('signup.views',
+	url(r'^location/$', views.LocationList.as_view()),
+    url(r'^location/(?P<pk>[0-9]+)/$', views.LocationDetail.as_view()),
+    url(r'^event/$', views.EventList.as_view()),
+    url(r'^event/(?P<pk>[0-9]+)/$', views.EventDetail.as_view()),
+    url(r'^person/$', views.PersonList.as_view()),
+    url(r'^person/(?P<pk>[0-9]+)/$', views.PersonDetail.as_view()),
+    url(r'^slot/$', views.SlotList.as_view()),
+    url(r'^slot/(?P<pk>[0-9]+)/$', views.SlotDetail.as_view()),
+)
+
+urlpatterns = format_suffix_patterns(urlpatterns)
