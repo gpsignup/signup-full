@@ -1,13 +1,23 @@
 from django.forms import widgets
+from django.contrib.auth.models import User
+
 from rest_framework import serializers
-from signup.models import Location, Event, Person, Slot, Admin
+
+from signup.models import Location, Access_Key, Event, Person, Slot
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ('id', 'location_name')
+        fields = ('id', 'location_name',)
+
+class AccessKeySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Access_Key
+        fields = ('id', 'key_string', 'description',)
 
 class EventSerializer(serializers.ModelSerializer):
+    owner = serializers.Field(source='owner.username')
+
     class Meta:
         model = Event
         fields = ('id', 
@@ -23,11 +33,19 @@ class EventSerializer(serializers.ModelSerializer):
     			  'default_slot_capacity',
     			  'event_signup_open_time',
     			  'event_signup_close_time',
-    			  'event_created_timestamp',
-    			  'event_modified_timestamp',
+    			  'created_timestamp',
+    			  'modified_timestamp',
     			  'event_creator',
     			  'event_password',
-    			  'is_private')
+    			  'is_private',
+                  'owner',)
+
+class UserSerializer(serializers.ModelSerializer):
+    events = serializers.PrimaryKeyRelatedField(many=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'events',)
 
 class PersonSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,10 +54,10 @@ class PersonSerializer(serializers.ModelSerializer):
         		  'person_name',
     			  'email',
     			  'phone',
-    			  'person_created_timestamp',
-    			  'person_modified_timestamp',
+    			  'created_timestamp',
+    			  'modified_timestamp',
     			  'person_code',
-    			  'want_reminder')
+    			  'want_reminder',)
 
 class SlotSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,9 +65,10 @@ class SlotSerializer(serializers.ModelSerializer):
         fields = ('id', 
         		  'slot_date',
     			  'slot_start_time',
+                  'slot_end_time',
     			  'event',
     			  'people',
     			  'slot_location',
     			  'slot_capacity',
-    			  'slot_created_timestamp',
-    			  'slot_created_timestamp')
+    			  'created_timestamp',
+    			  'created_timestamp',)

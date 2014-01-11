@@ -1,0 +1,7 @@
+Django==1.6.1
+South==0.8.4
+argparse==1.2.1
+django-debug-toolbar==1.0.1
+djangorestframework==2.3.10
+sqlparse==0.1.10
+wsgiref==0.1.2

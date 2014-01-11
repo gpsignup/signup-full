@@ -16,14 +16,16 @@ urlpatterns = patterns('',
 
 # For testing Django REST Framework only: 
 urlpatterns = patterns('signup.views',
-	url(r'^location/$', views.LocationList.as_view()),
+	url(r'^locations/$', views.LocationList.as_view()),
     url(r'^location/(?P<pk>[0-9]+)/$', views.LocationDetail.as_view()),
-    url(r'^event/$', views.EventList.as_view()),
+    url(r'^accesskeys/$', views.AccessKeyList.as_view()),
+    url(r'^accesskey/(?P<pk>[0-9]+)/$', views.AccessKeyDetail.as_view()),
+    url(r'^events/$', views.EventList.as_view()),
     url(r'^event/(?P<pk>[0-9]+)/$', views.EventDetail.as_view()),
-    url(r'^person/$', views.PersonList.as_view()),
+    url(r'^people/$', views.PersonList.as_view()),
     url(r'^person/(?P<pk>[0-9]+)/$', views.PersonDetail.as_view()),
-    url(r'^slot/$', views.SlotList.as_view()),
-    url(r'^slot/(?P<pk>[0-9]+)/$', views.SlotDetail.as_view()),
+    url(r'^slots/$', views.SlotList.as_view()),
+    url(r'^slot/(?P<pk>[0-9]+)/$', views.SlotDetail.as_view()),    
 )
 
 urlpatterns = format_suffix_patterns(urlpatterns)
